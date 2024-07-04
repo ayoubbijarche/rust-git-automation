@@ -1,5 +1,6 @@
 use std::process::{exit, Command};
 use std::io;
+use names::Generator;
 
 
 
@@ -48,7 +49,7 @@ fn uploadrepo(){
     let commit = Command::new("git")
         .arg("commit")
         .arg("-m")
-        .arg("first commit")
+        .arg(name_generator())
         .output()
         .expect("failed to commit changes");
 
@@ -139,9 +140,9 @@ fn updaterepo(){
     let commit = Command::new("git")
         .arg("commit")
         .arg("-m")
-        .arg("some changes")
+        .arg(name_generator())
         .output()
-        .expect("failed to commit changes");
+        .expect("fail");
 
     if !commit.status.success(){
         println!("commiting changs failed");
@@ -177,4 +178,9 @@ fn main(){
             exit(1);
         }
     }
+}
+
+fn name_generator() -> String{
+let mut generator = Generator::default();
+    generator.next().unwrap()
 }
